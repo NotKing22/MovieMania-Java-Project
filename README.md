@@ -47,7 +47,7 @@
 </p>
 
 <p align="center">
-  <img src="https://i.imgur.com/jawiSTL.png" width="600px" alt="Exemplo de inserção da API Key no MovieService.class">
+  <img src="https://i.imgur.com/jawiSTL.png" width="1000px" alt="Exemplo de inserção da API Key no MovieService.class">
 </p>
 
 ---
@@ -80,8 +80,11 @@
 </p>
 
 <p align="center">
-  <em>🖼️ Espaço reservado para imagem da página inicial. (Necessário ter adicionado a KEY API do TMDB no projeto)</em><br>
-  <img src="https://imgur.com/jQdRsXu.png" width="600px" alt="pagina inicial">
+  <img src="https://imgur.com/jQdRsXu.png" width="1000px" alt="pagina inicial">
+  <br>
+  <img src="https://imgur.com/CwsUBBF.png" width="1000px" alt="pagina inicial filtro">
+  <br>
+  <img src="https://imgur.com/BTXS1sI.png" width="1000px" alt="avaliando filme">
 </p>
 
 ---
@@ -159,10 +162,11 @@
 </ul>
 
 <p align="center">
-  <em>🖼️ Espaço reservado para imagem do painel administrativo</em><br>
-  <img src="https://imgur.com/MRx2DH0.png" width="600px" alt="pagina administrativo">
-  <img src="https://imgur.com/T1zY20i.png" width="600px" alt="pagina administrativo">
-  <img src="https://imgur.com/UKIyPak.png" width="600px" alt="pagina administrativo">
+  <em>🔒 auth: email[admin@email.com], senha[1234]</em><br>
+  <img src="https://imgur.com/tenfJ0n.png" width="1000px" alt="pagina administrativo">
+  <img src="https://imgur.com/MRx2DH0.png" width="1000px" alt="pagina administrativo">
+  <img src="https://imgur.com/T1zY20i.png" width="1000px" alt="pagina administrativo">
+  <img src="https://imgur.com/UKIyPak.png" width="1000px" alt="pagina administrativo">
 </p>
 
 ---
