@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${movie.title}">Filme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #14181c;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+        .top-nav {
+            background-color: #14181c;
+            padding: 10px 20px;
+            border-bottom: 1px solid #22262a;
+            display: flex;
+            justify-content: center;
+        }
+        .top-nav-content {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .logo .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .logo .yellow { background-color: rgb(164, 0, 0); }
+        .logo .orange { background-color: rgb(255, 255, 255); }
+        .logo .green { background-color: rgb(0, 120, 253); }
+        .brand-name { font-size: 20px; font-weight: 700; }
+
+        .main-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .main-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        .main-links a:hover { color: #fff; }
+
+        .user-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .user-links form {
+            display: inline-block;
+            margin: 0;
+        }
+        .user-button {
+            background-color: #22262a;
+            color: #e0e0e0;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+        .user-button:hover {
+            background-color: #333;
+            border-color: #888;
+        }
+
+        .search-box { display: flex; align-items: center; margin-left: 10px; }
+        .search-box input {
+            background-color: #22262a;
+            border: none;
+            color: #e0e0e0;
+            padding: 8px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 200px;
+        }
+        .search-box input::placeholder { color: #999; }
+        .search-icon { margin-left: -30px; color: #999; }
+
+        /* Profile header */
+        .profile-header-container {
+            background-color: #22262a;
+            padding: 20px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: center;
+        }
+        .profile-header-content { max-width: 1200px; width: 100%; }
+        .profile-info { display: flex; align-items: center; margin-bottom: 20px; }
+        .profile-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/3418/3418886.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .profile-text .profile-username { font-size: 24px; font-weight: 700; display: block; }
+        .profile-text .profile-activity { font-size: 14px; color: #999; }
+        .profile-nav {
+            display: flex;
+            gap: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        .profile-nav a {
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding-bottom: 10px;
+            transition: color 0.2s;
+        }
+        .profile-nav a:hover { color: #fff; }
+        .profile-nav a.active {
+            color: #fff;
+            border-bottom: 2px solid #fff;
+            font-weight: 700;
+        }
+
+        /* Detalhes do filme */
+        .movie-detail-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .movie-detail-container img {
+            width: 350px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        .movie-info {
+            flex: 1;
+        }
+
+        .movie-info h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .movie-info p {
+            font-size: 16px;
+            margin: 8px 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #333;
+            color: #e0e0e0;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .back-link:hover { background-color: #555; }
+
+        /* Estilo da avaliação */
+        .rating-container {
+            margin-top: 25px;
+            background-color: #1c1f24;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .rating-container h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .stars input {
+            display: none;
+        }
+
+        .stars label {
+            font-size: 30px;
+            color: #555;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .stars input:checked ~ label,
+        .stars label:hover,
+        .stars label:hover ~ label {
+            color: #ffcc00;
+        }
+
+        .submit-btn {
+            background-color: #ffcc00;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: #14181c;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #ffdb4d;
+        }
+
+        /* Mensagens de feedback */
+        .alert {
+            margin: 15px auto;
+            padding: 12px 20px;
+            border-radius: 8px;
+            max-width: 800px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .alert-success {
+            background-color: #2e7d32;
+            color: #e8f5e9;
+        }
+        .alert-error {
+            background-color: #c62828;
+            color: #ffebee;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header topo -->
+    <header class="top-nav">
+        <div class="top-nav-content">
+            <div class="logo">
+                <span class="dot yellow"></span>
+                <span class="dot orange"></span>
+                <span class="dot green"></span>
+                <span class="brand-name">MovieMania</span>
+            </div>
+            <nav class="main-links">
+                <a href="/login">ENTRAR</a>
+                <a href="/cadastro">CRIAR UMA CONTA</a>
+                <a href="/">FILMES</a>
+            </nav>
+            <div class="search-box">
+                <input type="text" placeholder="Pesquisar">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mensagens -->
+    <div th:if="${mensagem}" class="alert alert-success" th:text="${mensagem}"></div>
+    <div th:if="${erro}" class="alert alert-error" th:text="${erro}"></div>
+
+    <!-- Detalhes do Filme -->
+    <main class="movie-detail-container">
+        <img th:src="@{'https://image.tmdb.org/t/p/w500' + ${movie.posterPath}}" alt="Poster">
+
+        <div class="movie-info">
+            <h1 th:text="${movie.title}"></h1>
+            <p><strong>Lançamento:</strong> <span th:text="${movie.releaseDate}"></span></p>
+            <p><strong>Nota:</strong> <span th:text="${movie.voteAverage}"></span></p>
+
+            <!-- Formulário de avaliação -->
+            <form th:action="@{/avaliar}" method="post" class="rating-container">
+                <h3>Avalie este filme</h3>
+				<div class="stars">
+				  <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+				  <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+				  <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+				  <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+				  <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+				</div>
+                <input type="hidden" name="movieId" th:value="${movie.id}">
+                <button type="submit" class="submit-btn">Enviar Avaliação</button>
+            </form>
+
+            <a href="/" class="back-link">⬅ Voltar</a>
+        </div>
+    </main>
+
+    <script>
+        // Efeito visual das estrelas
+        const stars = document.querySelectorAll('.stars label');
+        stars.forEach((star, index) => {
+            star.addEventListener('mouseover', () => {
+                stars.forEach((s, i) => {
+                    s.style.color = i <= index ? '#ffcc00' : '#555';
+                });
+            });
+            star.addEventListener('mouseout', () => {
+                const checked = document.querySelector('.stars input:checked');
+                stars.forEach((s, i) => {
+                    s.style.color = checked && i <= [...stars].indexOf(checked.nextElementSibling) ? '#ffcc00' : '#555';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

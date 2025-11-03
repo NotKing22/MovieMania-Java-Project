@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Mania: Criar conta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset básico */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .create-account-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        .create-account-box {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 30px;
+            width: 360px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .create-account-box h2 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-group { margin-bottom: 15px; }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .password-info {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .password-info .info-icon {
+            font-style: normal;
+            background-color: #0073e6;
+            color: #fff;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 10px;
+            margin-right: 5px;
+        }
+
+        .create-account-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #f7d639;
+            border: 1px solid #f7d639;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .create-account-button:hover { background-color: #f2c710; }
+
+        hr { border: none; border-top: 1px solid #ccc; margin: 20px 0; }
+
+        .error-message {
+            color: red;
+            font-size: 13px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .create-account-box p {
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .create-account-box .sign-in-link {
+            font-size: 12px;
+            color: #0066c0;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        footer hr {
+            width: 80%;
+            border-top: 1px solid #e0e0e0;
+            margin: 0 auto 20px auto;
+        }
+
+        .footer-links a {
+            font-size: 12px;
+            color: #0066c0;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer p {
+            font-size: 12px;
+            color: #555;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="create-account-container">
+        <img src="https://cdn-icons-png.flaticon.com/512/3418/3418886.png" alt="Movie Mania Logo" class="logo">
+        <div class="create-account-box">
+            <h2>Criar conta</h2>
+
+            <!-- erro msg -->
+			<div class="error-message" th:if="${erroEmail}" th:text="${erroEmail}"></div>
+			<div class="error-message" th:if="${erroSenha}" th:text="${erroSenha}"></div>
+			<div class="error-message" th:if="${erroSenhaConfirmacao}" th:text="${erroSenhaConfirmacao}"></div>
+
+
+            <form action="/cadastrado" method="post">
+                <div class="input-group">
+                    <label for="nome_completo">Nome completo</label>
+                    <input type="text" id="nome_completo" name="nome_completo" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" required>
+                    <div class="password-info">
+                        <i class="info-icon">i</i>
+                        <span>Senha deve ter pelo menos 8 caracteres.</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="re_senha">Reinsira a senha</label>
+                    <input type="password" id="re_senha" name="re_senha" required>
+                </div>
+                <button type="submit" class="create-account-button">Criar conta Movie Mania</button>
+            </form>
+
+            <hr>
+            <p>Já tem uma conta? <a href="/login" class="sign-in-link">Entrar ›</a></p>
+        </div>
+    </div>
+
+    <footer>
+        <hr>
+        <div class="footer-links">
+            <a href="#">Ajuda</a>
+            <a href="#">Termos de uso</a>
+            <a href="#">Privacidade</a>
+        </div>
+        <p>© 2002-2025, MovieMania.com, Inc. ou afiliados</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Administradores - Reviews</title>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Nunito', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .sidebar {
+            width: 220px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+        }
+
+        .sidebar a {
+            color: #fff;
+            padding: 12px 20px;
+            display: block;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .topbar {
+            margin-left: 220px;
+            height: 60px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .topbar .search input {
+            padding: 6px 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .topbar .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .topbar .user-info img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background-color: #4e73df;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #224abe;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4e73df;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f4f6fc;
+        }
+
+        footer {
+            margin-left: 220px;
+            padding: 15px 20px;
+            background-color: #fff;
+            text-align: center;
+            color: #666;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+            margin-top: 40px;
+        }
+
+        .sort-form {
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+                padding-top: 10px;
+            }
+
+            .sidebar h2 {
+                display: none;
+            }
+
+            .main-content,
+            .topbar {
+                margin-left: 60px;
+            }
+
+            th,
+            td {
+                font-size: 0.85rem;
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Admin</h2>
+        <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="#"><i class="fas fa-cog"></i> Components</a>
+        <a href="#"><i class="fas fa-folder"></i> Administração</a>
+    </div>
+
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="search">
+            <input type="text" placeholder="Buscar..." />
+        </div>
+        <div class="user-info">
+            <span>Olá, Admin!</span>
+            <img src="https://i.imgur.com/EaGxkHp.png" alt="Usuário" />
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Reviews do Usuário</h1>
+
+        <!-- Usuário -->
+        <h2 th:text="'Usuário: ' + ${usuario.nome_completo}">Usuário: Nome</h2>
+
+        <p th:if="${reviewsCount != null}" th:text="'Total de reviews: ' + ${reviewsCount}">Total de reviews: 0</p>
+
+        <!-- Filtro de ordenação -->
+		<form th:action="@{/admin/reviews/{id}(id=${usuario.ID})}" method="get" class="sort-form">
+            <label for="sort">Ordenar por nota:</label>
+            <select name="sort" id="sort" onchange="this.form.submit()">
+                <option value="desc" th:selected="${sort == 'desc'}">Maiores notas</option>
+                <option value="asc" th:selected="${sort == 'asc'}">Menores notas</option>
+            </select>
+            <input type="hidden" name="id" th:value="${usuario.ID}" />
+        </form>
+
+        <!-- Caso sem filmes -->
+        <p th:if="${#lists.isEmpty(filmes)}" style="margin-top:10px; font-style:italic;">
+            Este usuário ainda não avaliou nenhum filme.
+        </p>
+
+        <!-- Tabela de filmes -->
+        <div th:if="${!#lists.isEmpty(filmes)}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Filme</th>
+                        <th>Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="review : ${filmes}">
+                        <td th:text="${review.tituloFilme}">Título do Filme</td>
+                        <td th:text="${review.nota}">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <a th:href="@{/admin/ver}" class="btn btn-primary" style="margin-top: 20px; display:inline-block;">Voltar</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        © 2025 Dashboard Administradores
+    </footer>
+
+</body>
+
+</html>
