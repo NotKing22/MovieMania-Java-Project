@@ -13,7 +13,7 @@
   O <strong>MovieMania</strong> é uma aplicação web que permite ao usuário visualizar uma lista de filmes, 
   avaliar cada um com notas de <strong>1 a 5 estrelas</strong> e filtrar os resultados de acordo com suas preferências.
   <br><br>
-  O sistema também possui um <strong>painel administrativo</strong> onde é possível gerenciar usuários e visualizar suas avaliações.
+  O sistema também possui um <strong>painel administrativo</strong> onde é possível gerenciar usuários e visualizar e ordenar suas avaliações.
 </p>
 
 ---
